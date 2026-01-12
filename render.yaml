@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: nebula-engine
+    env: node
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 8080

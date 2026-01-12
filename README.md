@@ -20,3 +20,10 @@ npm test
 ```
 
 Enable debug logs with `BARE_DEBUG=1`.
+
+Deploy
+------
+
+Deploy this repository to Render with one click:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/owendavies413-netizen/nebula-engine)

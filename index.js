@@ -1,4 +1,4 @@
-import { createBareServer } from '@tomsun28/bare-server-node';
+import { createBareServer } from './bare-server-node.js';
 import http from 'node:http';
 
 const bare = createBareServer('/bare/');
@@ -28,11 +28,22 @@ server.on('upgrade', (req, socket, head) => {
     }
 });
 
+// Handle HTTP CONNECT tunneling
+server.on('connect', (req, clientSocket, head) => {
+    if (bare.shouldRoute(req)) {
+        // routeConnect will parse host:port from req.url when necessary
+        bare.routeConnect(req, clientSocket, head);
+    } else {
+        try { clientSocket.end(); } catch (e) {}
+    }
+});
+
 // Use Render's assigned port or default to 8080
 const PORT = process.env.PORT || 8080;
 
 server.listen({
     port: PORT,
+    host: '0.0.0.0'
+}, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
-
-console.log(`Nebula Engine is running on port ${PORT}`);
